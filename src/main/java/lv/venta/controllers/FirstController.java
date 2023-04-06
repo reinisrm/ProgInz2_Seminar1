@@ -84,13 +84,27 @@ public class FirstController {
 		return "all-products-page";
 	}
 	
-	//TODO uztaisīt html lapu, kas var visus produktus attēlot
-	
-	
-	//TODO kontrolieri, kas izfiltrē visus produktus, kuru cena ir mazaka par 2 eur
-	
-	
-	
+	//TODO kontrolieri, kas izfiltrē visus produktus, kuru cena ir mazaka par padoto vērtību	
+	//localhost:8080/allproducts/1.99
+	@GetMapping("/allproducts/{price}")
+	public String allProductsByPrice(@PathVariable("price") float price, Model model )
+	{
+		if(price > 0) {
+			
+			ArrayList<Product> allProductsWithPriceLess = new ArrayList<>();
+			for(Product temp: allProducts) {
+				if(temp.getPrice() < price) {
+					allProductsWithPriceLess.add(temp);
+				}
+			}
+			model.addAttribute("myAllProducts", allProductsWithPriceLess);
+			return "all-products-page";
+			
+		}
+		
+		return "error-page";//parādīs error-page.html lapu
+		
+	}
 	
 	
 }
