@@ -78,8 +78,11 @@ public class FirstController {
 	
 	
 	//TODO kontrolieri, kas atgriežis visus produktus
-	
-	
+	@GetMapping("/allproducts") //localhost:8080/allproducts
+	public String allProductsFunc(Model model) {
+		model.addAttribute("myAllProducts", allProducts);
+		return "all-products-page";
+	}
 	
 	//TODO uztaisīt html lapu, kas var visus produktus attēlot
 	
