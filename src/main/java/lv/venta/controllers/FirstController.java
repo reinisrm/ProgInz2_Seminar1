@@ -77,7 +77,7 @@ public class FirstController {
 	}
 	
 	//TODO kontrolieri, kas izfiltrē visus produktus, kuru cena ir mazaka par 2 eur
-	
+	//TODO
 	
 	
 	
