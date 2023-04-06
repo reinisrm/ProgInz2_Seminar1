@@ -76,8 +76,17 @@ public class FirstController {
 		
 	}
 	
+	
+	//TODO kontrolieri, kas atgriežis visus produktus
+	
+	
+	
+	//TODO uztaisīt html lapu, kas var visus produktus attēlot
+	
+	
 	//TODO kontrolieri, kas izfiltrē visus produktus, kuru cena ir mazaka par 2 eur
-	//TODO
+	
+	
 	
 	
 	
