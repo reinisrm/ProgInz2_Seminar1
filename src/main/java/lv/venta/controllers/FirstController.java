@@ -17,9 +17,9 @@ public class FirstController {
 
 	private ArrayList<Product> allProducts 
 	= new ArrayList<>(Arrays.asList(
-			new Product("Ābols", 3.99f, "Sarkans", 3),
-			new Product("Burkāns", 0.33f, "Oranžš", 2),
-			new Product("Gurķis", 1.22f, "Zaļš", 6)
+			new Product("Abols", 3.99f, "Sarkans", 3),
+			new Product("BurkAns", 0.33f, "Oranzs", 2),
+			new Product("Gurkis", 1.22f, "Zals", 6)
 	
 			));
 	@GetMapping("/hello") // tiks izsaukta, ja url būs localhost:8080/hello
@@ -126,11 +126,45 @@ public class FirstController {
 	}
 	
 	//TODO update 
-	//TODO izveidot get kontrolieri, kas nolasīs produkta id un pēc ta atradīs produktu un nosūtīs 
+	//TODO izveidot get kontrolieri, kas nolasīs produkta id un pēc ta atradīs produktu un nosūtīs
 	//caur model objektu uz frontend + parādīt update-page
-	//TODO izveidot uupdate-page.html, kas strādās uz cita endpoint
-	//TODO izveidot post kontrolieri, kas saņemoto objektu redigē arī allProducts sarakstā
 	
+	@GetMapping("/update/{id}") //localhost:8080/update/1
+	public String updateProductByIdGetFunc(@PathVariable("id") int id, Model model) {
+		for(Product temp: allProducts) {
+			if(temp.getId() == id) {
+				model.addAttribute("product", temp);
+				return "update-page";//parādīs update-page.html
+			}
+		}
+		return "error-page";
+	}
+	
+	
+	// izveidot uupdate-page.html, kas strādās uz cita endpoint
+	// izveidot post kontrolieri, kas saņemoto objektu redigē arī allProducts sarakstā
+	
+	@PostMapping("/update/{id}")
+	public String updateProductByIdPostFunc(@PathVariable("id") int id, Product product )//ienāk redigētais produkts
+	{
+		for(Product temp: allProducts) {
+			if(temp.getId() == id) {
+				temp.setTitle(product.getTitle());
+				temp.setPrice(product.getPrice());
+				temp.setDescription(product.getDescription());
+				temp.setQuantity(product.getQuantity());
+				return "redirect:/product/"+temp.getTitle(); //tiks izsaukst localhost:8080/product/Abols
+			}
+		}
+		return "redirect:/error";//tiks izsaukts localhost:8080/error
+		
+	}
+	
+	
+	@GetMapping("/error")
+	public String errorFunc() {
+		return "error-page";
+	}
 	
 	
 	
