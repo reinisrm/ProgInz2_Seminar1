@@ -167,7 +167,19 @@ public class FirstController {
 	}
 	
 	
+	//TODO izveidot delete funkcionalitāti
 	
+	@GetMapping("/delete/{id}")
+	public String deleteProductById(@PathVariable("id") int id, Model model) {
+		for(Product temp : allProducts) {
+			if(temp.getId() == id) {
+				allProducts.remove(temp);
+				model.addAttribute("myAllProducts", allProducts);
+				return "all-products-page";//parāda all-products-page.html lapu
+			}
+		}
+		return "error-page";
+	}
 	
 	
 	
