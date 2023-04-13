@@ -17,9 +17,9 @@ public class FirstController {
 
 	private ArrayList<Product> allProducts 
 	= new ArrayList<>(Arrays.asList(
-			new Product(1, "Ābols", 3.99f, "Sarkans", 3),
-			new Product(2, "Burkāns", 0.33f, "Oranžš", 2),
-			new Product(3, "Gurķis", 1.22f, "Zaļš", 6)
+			new Product("Ābols", 3.99f, "Sarkans", 3),
+			new Product("Burkāns", 0.33f, "Oranžš", 2),
+			new Product("Gurķis", 1.22f, "Zaļš", 6)
 	
 			));
 	@GetMapping("/hello") // tiks izsaukta, ja url būs localhost:8080/hello
@@ -37,7 +37,7 @@ public class FirstController {
 
 	@GetMapping("/product") // tiks izsaukta, ja url būs localhost:8080/product
 	public String productFunc(Model model) {
-		Product prod = new Product(1, "Ābols", 3.99f, "Sarkans", 3);
+		Product prod = new Product("Ābols", 3.99f, "Sarkans", 3);
 		model.addAttribute("myProduct", prod);
 		return "product-page"; // tiks parādīta product-page.html lapa un tajā parādīsies
 	}
@@ -118,15 +118,21 @@ public class FirstController {
 	public String insertProductPostFunc(Product product)//tiek saņemts aizpildīts produkts
 	{
 		//TODO var izveidot dažādas pāŗbaudes
-		allProducts.add(product);
+		Product prod = new Product(product.getTitle(), product.getPrice(), product.getDescription(), product.getQuantity());
+		allProducts.add(prod);
 		return "redirect:/allproducts";//izsaucam get kontrolieri localhost:8080/allproducts
 		
 		
 	}
 	
-	//TODO git
-	//TODO pārtaisīt kodu, lai id ietu automātiski
 	//TODO update 
+	//TODO izveidot get kontrolieri, kas nolasīs produkta id un pēc ta atradīs produktu un nosūtīs 
+	//caur model objektu uz frontend + parādīt update-page
+	//TODO izveidot uupdate-page.html, kas strādās uz cita endpoint
+	//TODO izveidot post kontrolieri, kas saņemoto objektu redigē arī allProducts sarakstā
+	
+	
+	
 	
 	
 	
