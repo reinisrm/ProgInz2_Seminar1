@@ -3,6 +3,7 @@ package lv.venta.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lv.venta.models.Product;
+import lv.venta.services.ICRUDProductService;
+import lv.venta.services.IFilteringProductService;
 
 @Controller
 public class FirstController {
 
-	private ArrayList<Product> allProducts 
-	= new ArrayList<>(Arrays.asList(
-			new Product("Abols", 3.99f, "Sarkans", 3),
-			new Product("BurkAns", 0.33f, "Oranzs", 2),
-			new Product("Gurkis", 1.22f, "Zals", 6)
+	@Autowired
+	private IFilteringProductService filterService;
 	
-			));
+	@Autowired
+	private ICRUDProductService crudService;
+	
+
 	@GetMapping("/hello") // tiks izsaukta, ja url būs localhost:8080/hello
 	public String helloFunc() {
 		System.out.println("Mans pirmais kontrolieris ir nostrādājis");
@@ -48,12 +51,15 @@ public class FirstController {
 	@GetMapping("/productOne") 
 	public String productByParamFunc(@RequestParam("title") String title, Model model) {
 		if(title!=null) {
-			for(Product temp: allProducts) {
-				if(temp.getTitle().equals(title)) {
-					model.addAttribute("myProduct", temp);
-					return "product-page";
-				}
+			Product temp;
+			try {
+				temp = crudService.retrieveOneProductByTitle(title);
+				model.addAttribute("myProduct", temp);
+				return "product-page";
+			} catch (Exception e) {
+				return "error-page";//parādīs error-page.html lapu
 			}
+			
 		}
 		
 		return "error-page";//parādīs error-page.html lapu
@@ -89,20 +95,11 @@ public class FirstController {
 	@GetMapping("/allproducts/{price}")
 	public String allProductsByPrice(@PathVariable("price") float price, Model model )
 	{
-		if(price > 0) {
-			
-			ArrayList<Product> allProductsWithPriceLess = new ArrayList<>();
-			for(Product temp: allProducts) {
-				if(temp.getPrice() < price) {
-					allProductsWithPriceLess.add(temp);
-				}
-			}
-			model.addAttribute("myAllProducts", allProductsWithPriceLess);
-			return "all-products-page";
-			
-		}
+		ArrayList<Product> allProductsWithPriceLess = filterService.filterByPriceLess(price);
+		model.addAttribute("myAllProducts", allProductsWithPriceLess);
+		return "all-products-page";
 		
-		return "error-page";//parādīs error-page.html lapu
+	//	return "error-page";//parādīs error-page.html lapu
 		
 	}
 	
