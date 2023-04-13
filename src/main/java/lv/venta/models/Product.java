@@ -49,6 +49,7 @@ public Product(int id, String title, float price, String description, int quanti
         this.quantity = quantity;
 }
         
+public Product() {}
         
 }
 

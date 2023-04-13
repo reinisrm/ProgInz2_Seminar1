@@ -107,4 +107,29 @@ public class FirstController {
 	}
 	
 	
+	@GetMapping("/insert") //localhost:8080/insert
+	public String insertProductFunc(Product product) //tiek padots tukšs produkts
+	{
+		return "insert-page";//parādīs insert-page.html lapu
+	}
+	
+	
+	@PostMapping("/insert")
+	public String insertProductPostFunc(Product product)//tiek saņemts aizpildīts produkts
+	{
+		//TODO var izveidot dažādas pāŗbaudes
+		allProducts.add(product);
+		return "redirect:/allproducts";//izsaucam get kontrolieri localhost:8080/allproducts
+		
+		
+	}
+	
+	//TODO git
+	//TODO pārtaisīt kodu, lai id ietu automātiski
+	//TODO update 
+	
+	
+	
+	
+	
 }
