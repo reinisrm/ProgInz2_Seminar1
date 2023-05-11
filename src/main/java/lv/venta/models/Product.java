@@ -14,8 +14,8 @@ public class Product {
 	private int id;
 	
 	@NotNull
-	@Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+")
-	@Size(min = 3, max = 30)
+	@Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam")
+	@Size(min = 3, max = 30, message = "Jabūt vismaz 3 un ne vairāk kā 30 simboliem")
 	private String title;
 	
 	@Min(value = 0)
