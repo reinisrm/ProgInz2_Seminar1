@@ -74,12 +74,18 @@ public class ProductServiceImpl implements ICRUDProductService, IFilteringProduc
 
 	@Override
 	public void deleteProductById(int id) throws Exception {
+		boolean isFound = false;
 		for (Product temp : allProducts) {
 			if (temp.getId() == id) {
 				allProducts.remove(temp);
+				isFound = true;
+				break;
 			}
 		}
-		throw new Exception("Wrong id");
+		if(!isFound)
+		{
+			throw new Exception("Wrong id");
+		}
 
 	}
 

@@ -51,15 +51,15 @@ public class FirstController {
 	@GetMapping("/productOne") 
 	public String productByParamFunc(@RequestParam("title") String title, Model model) {
 		if(title!=null) {
-			Product temp;
-			try {
-				temp = crudService.retrieveOneProductByTitle(title);
+			try
+			{
+				Product temp = crudService.retrieveOneProductByTitle(title);
 				model.addAttribute("myProduct", temp);
 				return "product-page";
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				return "error-page";//parādīs error-page.html lapu
 			}
-			
 		}
 		
 		return "error-page";//parādīs error-page.html lapu
@@ -70,23 +70,25 @@ public class FirstController {
 	@GetMapping("/product/{title}") 
 	public String productByParamFunc2(@PathVariable("title") String title, Model model) {
 		if(title!=null) {
-			for(Product temp: allProducts) {
-				if(temp.getTitle().equals(title)) {
-					model.addAttribute("myProduct", temp);
-					return "product-page";
-				}
+			try
+			{
+				Product temp = crudService.retrieveOneProductByTitle(title);
+				model.addAttribute("myProduct", temp);
+				return "product-page";
+			}
+			catch (Exception e) {
+				return "error-page";//parādīs error-page.html lapu
 			}
 		}
 		
 		return "error-page";//parādīs error-page.html lapu
-		
 	}
 	
 	
 	//TODO kontrolieri, kas atgriežis visus produktus
 	@GetMapping("/allproducts") //localhost:8080/allproducts
 	public String allProductsFunc(Model model) {
-		model.addAttribute("myAllProducts", allProducts);
+		model.addAttribute("myAllProducts", crudService.retrieveAllProducts());
 		return "all-products-page";
 	}
 	
@@ -115,8 +117,7 @@ public class FirstController {
 	public String insertProductPostFunc(Product product)//tiek saņemts aizpildīts produkts
 	{
 		//TODO var izveidot dažādas pāŗbaudes
-		Product prod = new Product(product.getTitle(), product.getPrice(), product.getDescription(), product.getQuantity());
-		allProducts.add(prod);
+		crudService.insertProductByParams(product.getTitle(), product.getPrice(), product.getDescription(), product.getQuantity());
 		return "redirect:/allproducts";//izsaucam get kontrolieri localhost:8080/allproducts
 		
 		
@@ -128,13 +129,15 @@ public class FirstController {
 	
 	@GetMapping("/update/{id}") //localhost:8080/update/1
 	public String updateProductByIdGetFunc(@PathVariable("id") int id, Model model) {
-		for(Product temp: allProducts) {
-			if(temp.getId() == id) {
-				model.addAttribute("product", temp);
-				return "update-page";//parādīs update-page.html
-			}
+		try
+		{
+			model.addAttribute("product", crudService.retrieveOneProductById(id));
+			return "update-page";//parādīs update-page.html
 		}
-		return "error-page";
+		catch (Exception e) {
+			return "error-page";
+		}
+		
 	}
 	
 	
@@ -144,16 +147,17 @@ public class FirstController {
 	@PostMapping("/update/{id}")
 	public String updateProductByIdPostFunc(@PathVariable("id") int id, Product product )//ienāk redigētais produkts
 	{
-		for(Product temp: allProducts) {
-			if(temp.getId() == id) {
-				temp.setTitle(product.getTitle());
-				temp.setPrice(product.getPrice());
-				temp.setDescription(product.getDescription());
-				temp.setQuantity(product.getQuantity());
-				return "redirect:/product/"+temp.getTitle(); //tiks izsaukst localhost:8080/product/Abols
-			}
+		
+		try
+		{
+			Product temp = crudService.updateProductByParams(id, product.getTitle(),
+				product.getPrice(), product.getDescription(), product.getQuantity());
+			return "redirect:/product/"+temp.getTitle(); //tiks izsaukst localhost:8080/product/Abols
 		}
-		return "redirect:/error";//tiks izsaukts localhost:8080/error
+		catch (Exception e) {
+			return "redirect:/error";//tiks izsaukts localhost:8080/error
+		}
+		
 		
 	}
 	
@@ -168,14 +172,17 @@ public class FirstController {
 	
 	@GetMapping("/delete/{id}")
 	public String deleteProductById(@PathVariable("id") int id, Model model) {
-		for(Product temp : allProducts) {
-			if(temp.getId() == id) {
-				allProducts.remove(temp);
-				model.addAttribute("myAllProducts", allProducts);
-				return "all-products-page";//parāda all-products-page.html lapu
-			}
+		try
+		{
+			crudService.deleteProductById(id);
+			model.addAttribute("myAllProducts", crudService.retrieveAllProducts());
+			return "all-products-page";//parāda all-products-page.html lapu
 		}
-		return "error-page";
+		catch (Exception e) {
+			return "error-page";
+		}
+		
+		
 	}
 	
 	
