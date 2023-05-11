@@ -4,21 +4,25 @@
 			<tr>
 				<td>Produkta nosaukums:</td>
 				<td><input type="text" th:field="*{title}"   />  </td>
+				<td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"> </td>
 			</tr>
 			
 			<tr>
 				<td>Produkta cena:</td>
 				<td><input type="text" th:field="*{price}"   />  </td>
+				<td th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </td>
 			</tr>
 			
 			<tr>
 				<td>Produkta apraksts:</td>
 				<td><input type="text" th:field="*{description}"   />  </td>
+				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"> </td>
 			</tr>
 			
 			<tr>
 				<td>Produkta daudzums:</td>
 				<td><input type="text" th:field="*{quantity}"   />  </td>
+				<td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"> </td>
 			</tr>
 			
 		
