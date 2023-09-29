@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import lv.venta.models.security.MyAuthority;
 import lv.venta.models.security.MyUser;
 
-import lv.venta.repo.IMyAuthorityRepo;
+import lv.venta.repo.security.IMyAuthorityRepo;
 import lv.venta.repo.security.IMyUserRepo;
 
 @SpringBootApplication

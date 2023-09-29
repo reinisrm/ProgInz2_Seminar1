@@ -26,7 +26,7 @@ public class MyAuthority {
 	private int myAuthorityId;
 	
 	@Column(name = "Title")
-	//@NotNull
+	@NotNull
 	//@Pattern(regexp = "[A-Z]{3,8}") // lielie burti 3, 4, 5, 6, 7, vai 8
 	private String title;
 	
@@ -38,6 +38,14 @@ public class MyAuthority {
 	
 	
 	
+	public Collection<MyUser> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Collection<MyUser> users) {
+		this.users = users;
+	}
+
 	public String getTitle() {
 		return title;
 	}

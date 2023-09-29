@@ -1,4 +1,4 @@
-package lv.venta.repo;
+package lv.venta.repo.security;
 
 import org.springframework.data.repository.CrudRepository;
 

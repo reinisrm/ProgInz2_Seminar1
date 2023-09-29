@@ -85,6 +85,15 @@ public class MyUser {
 		this.password = password;
 	}
 	
+	
+	public Collection<MyAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(Collection<MyAuthority> authorities) {
+		this.authorities = authorities;
+	}
+
 	public MyUser() {
 		
 	}
