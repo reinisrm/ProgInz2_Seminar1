@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +15,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+@Entity
 @Table(name = "MyAuthority")
 public class MyAuthority {
 
@@ -24,8 +26,8 @@ public class MyAuthority {
 	private int myAuthorityId;
 	
 	@Column(name = "Title")
-	@NotNull
-	@Pattern(regexp = "[A-Z]{3,8}") // lielie burti 3, 4, 5, 6, 7, vai 8
+	//@NotNull
+	//@Pattern(regexp = "[A-Z]{3,8}") // lielie burti 3, 4, 5, 6, 7, vai 8
 	private String title;
 	
 	@ManyToMany

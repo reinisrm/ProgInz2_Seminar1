@@ -40,7 +40,7 @@ public class Seminar1Application {
 				MyUser user2 = new MyUser("Janis", "Berzins", passwordEncoderSimple().encode("321"));
 				userRepo.save(user2);
 				
-				MyAuthority auth1 = new MyAuthority("ADMIn");
+				MyAuthority auth1 = new MyAuthority("ADMIN");
 				MyAuthority auth2 = new MyAuthority("USER");
 				
 				auth1.addUser(user1); // Karina ka ADMIN
